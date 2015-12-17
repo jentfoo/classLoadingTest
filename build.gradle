@@ -1,0 +1,23 @@
+apply plugin: 'java'
+
+repositories {
+  mavenCentral()
+  maven {
+    url 'https://oss.sonatype.org/content/repositories/snapshots/'
+  }
+}
+
+dependencies {
+  testCompile group: 'junit', name: 'junit', version: '4.+'
+  testCompile 'org.threadly:threadly:5.+'
+}
+
+jar {
+  from configurations.compile.collect {
+    it.isDirectory() ? it : zipTree(it)
+  }
+}
+
+artifacts {
+  archives jar
+}
